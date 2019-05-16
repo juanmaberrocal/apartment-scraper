@@ -11,49 +11,49 @@ APARTMENT_LINKS = [
     { 'name': 'Troy', 'url': 'https://www.equityapartments.com/boston/south-end/troy-boston-apartments' }
 ]
 
-def scrape(apartmentSizes):
-    apartmentScrape = []
+def scrape(apartment_sizes):
+    apartment_scrape = []
 
     # go thru list of buildings
-    for apartmentLink in APARTMENT_LINKS:
-        response = requests.get(apartmentLink['url'], timeout=5)
+    for apartment_link in APARTMENT_LINKS:
+        response = requests.get(apartment_link['url'], timeout=5)
         content = BeautifulSoup(response.content, "html.parser")
 
         # check for list of apartment sizes
-        for apartmentSize in apartmentSizes:
-            apartments = content.find('div', attrs={"id": ("bedroom-type-" + str(apartmentSize))})
+        for apartment_size in apartment_sizes:
+            apartments = content.find('div', attrs={"id": ("bedroom-type-" + str(apartment_size))})
 
             # ensure building has search size
             if apartments is not None:
                 # list of apartments is expected to be in <li> elements
                 for apartment in apartments.findAll('li', attrs={"class": "unit"}):
-                    apartmentData = apartment.find('div', attrs={"class": "specs"})
+                    apartment_data = apartment.find('div', attrs={"class": "specs"})
 
                     # ensure apartment has specs defined
-                    if apartmentData is not None:
-                        apartmentObject = {
-                            'Building': apartmentLink['name']
+                    if apartment_data is not None:
+                        apartment_object = {
+                            'Building': apartment_link['name']
                         }
 
-                        for i, apartmentSpecs in enumerate(apartmentData.children):
-                            scrapeParse(i, apartmentSpecs, apartmentObject)
+                        for i, apartment_specs in enumerate(apartment_data.children):
+                            scrape_parse(i, apartment_specs, apartment_object)
                     
                         # add apartment info into list of scraped items
-                        apartmentScrape.append(apartmentObject)
+                        apartment_scrape.append(apartment_object)
 
     # return list of scraped apartments
-    return apartmentScrape
+    return apartment_scrape
 
-def scrapeParse(scrapeIndex, scrapeData, scrapeObject):
-    if scrapeIndex == 1:
-        scrapeObject['Price'] = re.sub(r'[\ \n\r]{2,}', '', scrapeData.find('span', attrs={"class": "pricing"}).text)
-    elif scrapeIndex == 3:
-        scrapeObject['Bd'] = re.sub(r'[\ \n\r]{1,}', '', re.sub(' Bed', '', scrapeData.text.split('/')[0]))
-        scrapeObject['Bth'] = re.sub(r'[\ \n\r]{1,}', '', re.sub(' Bath', '', scrapeData.text.split('/')[1]))
-    elif scrapeIndex == 5:
-        scrapeObject['Size (sq.ft.)'] = re.sub(r'[\ \n\r]{1,}', '', re.sub('sq.ft.', '', scrapeData.text.split('/')[0]))
-        scrapeObject['Floor'] = re.sub(r'[\ \n\r]{1,}', '', re.sub('Floor ', '', scrapeData.text.split('/')[1]))
-    elif scrapeIndex == 7:
-        scrapeObject['Available'] = re.sub(r'[\ \n\r]{2,}', '', re.sub('Available ', '', scrapeData.text))
+def scrape_parse(scrape_index, scrape_data, scrape_object):
+    if scrape_index == 1:
+        scrape_object['Price'] = re.sub(r'[\ \n\r]{2,}', '', scrape_data.find('span', attrs={"class": "pricing"}).text)
+    elif scrape_index == 3:
+        scrape_object['Bd'] = re.sub(r'[\ \n\r]{1,}', '', re.sub(' Bed', '', scrape_data.text.split('/')[0]))
+        scrape_object['Bth'] = re.sub(r'[\ \n\r]{1,}', '', re.sub(' Bath', '', scrape_data.text.split('/')[1]))
+    elif scrape_index == 5:
+        scrape_object['Size (sq.ft.)'] = re.sub(r'[\ \n\r]{1,}', '', re.sub('sq.ft.', '', scrape_data.text.split('/')[0]))
+        scrape_object['Floor'] = re.sub(r'[\ \n\r]{1,}', '', re.sub('Floor ', '', scrape_data.text.split('/')[1]))
+    elif scrape_index == 7:
+        scrape_object['Available'] = re.sub(r'[\ \n\r]{2,}', '', re.sub('Available ', '', scrape_data.text))
 
-    return scrapeObject
+    return scrape_object
