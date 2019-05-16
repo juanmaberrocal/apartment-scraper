@@ -1,6 +1,7 @@
 /__pycache__
 /apartment-scraper
-*.csv
+apartments_*.csv
+apartments_*.json
 token.pickle
 credentials.json
 config.json
