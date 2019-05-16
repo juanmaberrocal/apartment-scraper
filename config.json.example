@@ -1,0 +1,30 @@
+{
+    "APARTMENTS": {
+        "SIZES": [
+            0,
+            1,
+            2,
+            3
+        ],
+        "FILTERS": [
+            {
+                "bedrooms": 1,
+                "price": 2800,
+                "sqft": 400
+            },
+            {
+                "bedrooms": 2,
+                "price": 5000
+            }
+        ]
+    },
+    "EMAIL": {
+        "FROM": "foo@example.com",
+        "TO": [
+            "bar@example.com",
+            "baz@example.com"
+        ],
+        "SUBJECT": "Apartment List for {}",
+        "BODY": "Apartment results for {}. Total of {} apartments"
+    }
+}
