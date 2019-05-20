@@ -26,5 +26,8 @@
         ],
         "SUBJECT": "Apartment List for {}",
         "BODY": "Apartment results for {}. Total of {} apartments"
+    },
+    "SLACK": {
+        "URL": "https://hooks.slack.com/services/foo"
     }
 }

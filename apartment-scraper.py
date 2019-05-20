@@ -3,8 +3,10 @@
 import os
 import json
 import csv
+from tabulate import tabulate
 from datetime import datetime
 
+import slack
 import mailer
 import webscraper
 import parsedata
@@ -23,6 +25,17 @@ def to_json(date, data_array):
     with open(file_path, 'w') as outfile:
         json.dump(data_array, outfile)
     return file_path
+
+def to_table(data_array):
+    count = 0
+    rows = []
+    headers = []
+    for apt in data_array:
+        if count == 0:
+            headers = apt.keys()
+            count += 1
+        rows.append(apt.values())
+    return tabulate(rows, headers=headers)
 
 def to_csv(date, data_array):
     count = 0
@@ -89,11 +102,14 @@ def main():
     scrape_json = webscraper.scrape(config['APARTMENTS'])
     scrape_json = parsedata.parse(scrape_json, config['APARTMENTS']['FILTERS'])
 
-    if (needs_mail(date, scrape_json)):
-        file_path = to_csv(date, scrape_json)
-        mailer.send(date, len(scrape_json), file_path, config['EMAIL'])
-    else:
-        print('No new data to send')
+    table_data = to_table(scrape_json)
+    slack.send(config['SLACK']['URL'], table_data)
+
+    # if (needs_mail(date, scrape_json)):
+    #     file_path = to_csv(date, scrape_json)
+    #     mailer.send(date, len(scrape_json), file_path, config['EMAIL'])
+    # else:
+    #     print('No new data to send')
 
 if __name__ == "__main__":
     main()
