@@ -1,15 +1,16 @@
 #!/usr/bin/env python3
 
 import os
-import json
-import csv
-from tabulate import tabulate
 from datetime import datetime
 
-from app.modules import slack
 from app.modules import mailer
-from app.modules import webscraper
 from app.modules import parsedata
+from app.modules import slack
+from app.modules import webscraper
+
+from app.helpers.csv import to_csv
+from app.helpers.json import to_json
+from app.helpers.table import to_table
 
 def set_config():
     file_name = 'config.json'
@@ -23,37 +24,6 @@ def set_config():
 def set_date():
     now  = datetime.now()
     return now.strftime("%Y-%m-%d")
-
-def to_json(date, data_array):
-    file_path = 'apartments_' + date + '.json'
-    with open(file_path, 'w') as outfile:
-        json.dump(data_array, outfile)
-    return file_path
-
-def to_table(data_array):
-    count = 0
-    rows = []
-    headers = []
-    for apt in data_array:
-        if count == 0:
-            headers = apt.keys()
-            count += 1
-        rows.append(apt.values())
-    return tabulate(rows, headers=headers)
-
-def to_csv(date, data_array):
-    count = 0
-    file_path = 'apartments_' + date + '.csv'
-    apt_data = open(file_path, 'w')
-    csvwriter = csv.writer(apt_data)
-    for apt in data_array:
-        if count == 0:
-            header = apt.keys()
-            csvwriter.writerow(header)
-            count += 1
-        csvwriter.writerow(apt.values())
-    apt_data.close()
-    return file_path
 
 def needs_mail(date, data_array):
     file_path = 'apartments_' + date + '.json'
