@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-import equityscraper
+from . import equityscraper
 
 def scrape(opts = {}):
     apartment_sizes = [1, 2] if opts['SIZES'] is None else opts['SIZES']

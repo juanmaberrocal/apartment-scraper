@@ -6,13 +6,17 @@ import csv
 from tabulate import tabulate
 from datetime import datetime
 
-import slack
-import mailer
-import webscraper
-import parsedata
+from app.modules import slack
+from app.modules import mailer
+from app.modules import webscraper
+from app.modules import parsedata
 
 def set_config():
-    with open('config.json', 'r') as f:
+    file_name = 'config.json'
+    root_path = os.path.dirname(__file__)
+    file_path = os.path.join(root_path, file_name)
+
+    with open(file_path, 'r') as f:
         config = json.load(f)
     return config
 
@@ -102,14 +106,14 @@ def main():
     scrape_json = webscraper.scrape(config['APARTMENTS'])
     scrape_json = parsedata.parse(scrape_json, config['APARTMENTS']['FILTERS'])
 
-    table_data = to_table(scrape_json)
-    slack.send(config['SLACK']['URL'], table_data)
-
     # if (needs_mail(date, scrape_json)):
     #     file_path = to_csv(date, scrape_json)
     #     mailer.send(date, len(scrape_json), file_path, config['EMAIL'])
     # else:
     #     print('No new data to send')
+
+    table_data = to_table(scrape_json)
+    return slack.send(config['SLACK']['URL'], table_data)
 
 if __name__ == "__main__":
     main()

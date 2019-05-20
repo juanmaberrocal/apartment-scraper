@@ -10,5 +10,5 @@ def send(url, data, headers=None):
         'text': '```{}```'.format(data)
     }
 
-    r = requests.post(url, json=data, headers=headers)
-    print(r)
+    return requests.post(url, json=data, headers=headers)
+    

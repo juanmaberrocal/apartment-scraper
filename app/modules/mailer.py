@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-import gmail
+from . import gmail
 
 def send(date, scrape_size, file_path, opts = {}):
     sender = opts['FROM'] if 'FROM' in opts else configuration_email_error('FROM')

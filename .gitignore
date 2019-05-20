@@ -1,5 +1,5 @@
-/__pycache__
-/apartment-scraper
+**/__pycache__
+**/apartment-scraper
 apartments_*.csv
 apartments_*.json
 token.pickle

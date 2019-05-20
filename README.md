@@ -5,5 +5,5 @@ After all results are pulled and filtered, it sends out an email with the list o
 ### Run commands:
 - cd ~/apartment-scraper/
 - source apartment-scraper/bin/activate
-- python apartment-scraper.py
+- python app/apartment-scraper.py
 - deactivate
