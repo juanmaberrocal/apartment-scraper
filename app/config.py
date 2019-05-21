@@ -26,6 +26,7 @@ def fallback_config():
 def set_config():
     config = fallback_config()
     for env_config in ENV_CONFIGS:
+        c = get_env_config(env_config)
         if c is not None:
             try:
                 config[env_config] = json.loads(c)
