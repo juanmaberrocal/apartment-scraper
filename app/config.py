@@ -6,7 +6,7 @@ import json
 ENV_CONFIGS = [
     'APARTMENTS',
     'EMAIL',
-    'SLACK_URL'
+    'SLACK'
 ]
 
 def get_env_config(key):
