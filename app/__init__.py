@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from flask import Flask, jsonify
+from flask import Flask, request, jsonify
 
 from app import apartment_scraper
 from app import apartment_bot
@@ -25,6 +25,8 @@ def email():
 
 @app.route("/slack-event", methods=['POST'])
 def slack_event():
+    print(request)
+    print(request.json)
     content = request.json
     
     if content['type'] == 'url_verification':
@@ -32,8 +34,12 @@ def slack_event():
         resp.status_code = 200
     elif content['type'] == 'event_callback':
         r = apartment_bot.main(content['event'])
-        resp = jsonify(r)
-        resp.status_code = 200
+        if r:
+            resp = jsonify({ 'success': True })
+        else:
+            resp = jsonify({ 'error': r.text, 'success': False })
+        resp.status_code = r.status_code
+        return resp
     else:
         resp = jsonify({ 'error': 'Bad Request', 'success': False })
         resp.status_code = 400

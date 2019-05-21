@@ -15,12 +15,16 @@ def main(event):
         return { 'error': 'Invalid message string', 'success': False }
 
     url = 'https://slack.com/api/chat.postMessage'
-    data = { 'text': '/apartment-search' }
+    data = {
+        'text': 'I\'m sorry, you need to trigger `/apartment-search` yourself',
+        'channel': event['channel']
+    }
     headers = {
         'Content-type': 'application/json',
         'Authorization': 'Bearer {}'.format(config['SLACK']['TOKEN'])
     }
-    return requests.post(url, json=data, headers=headers)
+    r = requests.post(url, json=data, headers=headers)
+    return r
 
 if __name__ == "__main__":
     main()
