@@ -3,6 +3,8 @@
 import os
 from datetime import datetime
 
+from app.config import set_config
+
 from app.modules import mailer
 from app.modules import parsedata
 from app.modules import slack
@@ -11,15 +13,6 @@ from app.modules import webscraper
 from app.helpers.csv import to_csv
 from app.helpers.json import to_json
 from app.helpers.table import to_table
-
-def set_config():
-    file_name = 'config.json'
-    root_path = os.path.dirname(__file__)
-    file_path = os.path.join(root_path, file_name)
-
-    with open(file_path, 'r') as f:
-        config = json.load(f)
-    return config
 
 def set_date():
     now  = datetime.now()
