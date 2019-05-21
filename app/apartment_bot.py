@@ -7,8 +7,6 @@ from app.config import set_config
 EVENT_TYPE = 'app_mention'
 EVENT_TEXT = 'Look for apartments'
 
-SLACK_POST
-
 def main(event):
     config = set_config()
     if event['type'] != EVENT_TYPE:
