@@ -6,7 +6,7 @@ from app import apartment_scraper
 
 app = Flask(__name__)
 
-@app.route("/slackbot", methods=['GET'])
+@app.route("/slackbot", methods=['POST'])
 def slackbot():
     r = apartment_scraper.main()
     if r:
@@ -16,7 +16,7 @@ def slackbot():
     resp.status_code = r.status_code
     return resp
 
-@app.route("/email", methods=['GET'])
+@app.route("/email", methods=['POST'])
 def email():
     resp = jsonify({ 'error': 'Not Authorized', 'success': False })
     resp.status_code = 401
