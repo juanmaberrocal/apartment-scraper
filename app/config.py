@@ -11,7 +11,7 @@ ENV_CONFIGS = [
 
 def get_env_config(key):
     # using get will return `None` if a key is not present rather than raise a `KeyError`
-    k = print(os.environ.get(key))
+    return os.environ.get(key)
 
 def fallback_config():
     file_name = 'config.json'
@@ -26,8 +26,6 @@ def fallback_config():
 def set_config():
     config = fallback_config()
     for env_config in ENV_CONFIGS:
-        print(env_config)
-        c = get_env_config(env_config)
         if c is not None:
             try:
                 config[env_config] = json.loads(c)
