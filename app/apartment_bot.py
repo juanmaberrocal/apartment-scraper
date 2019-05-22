@@ -2,13 +2,10 @@
 
 import requests
 
-from app.config import set_config
-
 EVENT_TYPE = 'app_mention'
 EVENT_TEXT = 'Look for apartments'
 
-def main(event):
-    config = set_config()
+def main(config, event):
     if event['type'] != EVENT_TYPE:
         return { 'error': 'Invalid event type', 'success': False }
     if event['text'].find(EVENT_TEXT) == -1:

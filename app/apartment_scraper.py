@@ -3,8 +3,6 @@
 import os
 from datetime import datetime
 
-from app.config import set_config
-
 from app.modules import mailer
 from app.modules import parsedata
 from app.modules import slack
@@ -62,12 +60,11 @@ def compare_json_file(file_path, data_array):
 
     return is_same
 
-def main():
-    config = set_config()
+def main(config):
     date = set_date()
 
-    scrape_json = webscraper.scrape(config['APARTMENTS'])
-    scrape_json = parsedata.parse(scrape_json, config['APARTMENTS']['FILTERS'])
+    scrape_json = webscraper.scrape(config.APARTMENTS)
+    scrape_json = parsedata.parse(scrape_json, config.APARTMENTS['FILTERS'])
 
     # if (needs_mail(date, scrape_json)):
     #     file_path = to_csv(date, scrape_json)
@@ -76,7 +73,8 @@ def main():
     #     print('No new data to send')
 
     table_data = to_table(scrape_json)
-    return slack.send(config['SLACK']['URL'], table_data)
+    print(table_data)
+    # return slack.send(config['SLACK']['URL'], table_data)
 
 if __name__ == "__main__":
     main()
