@@ -73,8 +73,8 @@ def main(config):
     #     print('No new data to send')
 
     table_data = to_table(scrape_json)
-    print(table_data)
-    # return slack.send(config['SLACK']['URL'], table_data)
+    # print(table_data)
+    return slack.send(config.SLACK['URL'], table_data)
 
 if __name__ == "__main__":
     main()
