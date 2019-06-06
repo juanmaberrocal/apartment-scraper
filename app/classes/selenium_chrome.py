@@ -15,7 +15,7 @@ class SeleniumChrome:
         chrome_executable = self.__chrome_executable()
         
         self.driver = webdriver.Chrome(
-            executable_path='/usr/local/bin/chromedriver',
+            executable_path=chrome_executable,
             chrome_options=chrome_options
         )
 
