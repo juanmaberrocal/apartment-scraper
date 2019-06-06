@@ -21,6 +21,7 @@ class Router:
             r = apartment_scraper.main(self.configs)
             return self.__handle_response(r)
         except Exception as ex:
+            print(ex)
             return self.__exception_error(ex)
 
     def slack_event(self, args):

@@ -37,5 +37,7 @@ class Config:
     __ENV_CONFIGS = [
         'APARTMENTS',
         'EMAIL',
-        'SLACK'
+        'SLACK',
+        'GOOGLE_CHROME_BIN',
+        'CHROMEDRIVER_PATH'
     ]

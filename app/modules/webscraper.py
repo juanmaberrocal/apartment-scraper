@@ -3,6 +3,7 @@
 from operator import itemgetter
 
 from .scrapers import equityscraper
+from .scrapers import parklanescraper
 from .scrapers import watersidescraper
 
 def scrape(opts = {}):
@@ -10,6 +11,7 @@ def scrape(opts = {}):
     
     apartment_scrape = []
     apartment_scrape += equityscraper.scrape(apartment_sizes)
+    apartment_scrape += parklanescraper.scrape(apartment_sizes)
     apartment_scrape += watersidescraper.scrape(apartment_sizes)
 
     # return (sorted) list of scraped apartments

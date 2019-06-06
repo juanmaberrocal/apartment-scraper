@@ -28,6 +28,9 @@
         "BODY": "Apartment results for {}. Total of {} apartments"
     },
     "SLACK": {
-        "URL": "https://hooks.slack.com/services/foo"
-    }
+        "URL": "https://hooks.slack.com/services/foo",
+        "TOKEN": "foo_token"
+    },
+    "GOOGLE_CHROME_BIN": "path/to/bin/",
+    "CHROMEDRIVER_PATH": "exectable/path/"
 }
